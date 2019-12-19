@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.baidu.com">
-  <title>Archives: 2019 | 微客技术</title>
+  <title>散列表 | 微客技术</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="微客技术">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.baidu.com&#x2F;archives&#x2F;2019&#x2F;index.html">
+  <meta name="description" content="1、什么是散列函数？ 散列表是基于数组结构的扩展，利用了数组在随机访问元素的时候，时间复杂度为O(1)的特性。 散列函数就是将元素的key转化映射为数组的下标，然后通过数组下标访问数据，达到时间复杂度为O(1)的查找效率。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="散列表">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.baidu.com&#x2F;2019&#x2F;12&#x2F;19&#x2F;%E6%95%A3%E5%88%97%E8%A1%A8&#x2F;index.html">
 <meta property="og:site_name" content="微客技术">
+<meta property="og:description" content="1、什么是散列函数？ 散列表是基于数组结构的扩展，利用了数组在随机访问元素的时候，时间复杂度为O(1)的特性。 散列函数就是将元素的key转化映射为数组的下标，然后通过数组下标访问数据，达到时间复杂度为O(1)的查找效率。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.baidu.com&#x2F;2019&#x2F;12&#x2F;19&#x2F;%E6%95%A3%E5%88%97%E8%A1%A8&#x2F;img&#x2F;sjjg&#x2F;hash_1.png">
+<meta property="article:published_time" content="2019-12-19T07:29:02.000Z">
+<meta property="article:modified_time" content="2019-12-19T07:45:12.336Z">
 <meta property="article:author" content="laisanxin">
+<meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.baidu.com&#x2F;2019&#x2F;12&#x2F;19&#x2F;%E6%95%A3%E5%88%97%E8%A1%A8&#x2F;img&#x2F;sjjg&#x2F;hash_1.png">
   
     <link rel="alternative" href="/atom.xml" title="微客技术" type="application/atom+xml">
   
@@ -130,36 +137,116 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-散列表" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      散列表
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/19/%E6%95%A3%E5%88%97%E8%A1%A8/" class="archive-article-date">
+
+        
+        <a href="/2019/12/19/%E6%95%A3%E5%88%97%E8%A1%A8/" class="archive-article-date">
   	<time datetime="2019-12-19T07:29:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-19</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/19/%E6%95%A3%E5%88%97%E8%A1%A8/">散列表</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="img/sjjg/hash_1.png" alt="image-20191219153505908"></p>
+<p><strong>1、什么是散列函数？</strong></p>
+<p>散列表是基于数组结构的扩展，利用了数组在随机访问元素的时候，时间复杂度为O(1)的特性。</p>
+<p>散列函数就是将元素的key转化映射为数组的下标，然后通过数组下标访问数据，达到时间复杂度为O(1)的查找效率。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<p><strong>2、该如何构造散列函数？散列函数设计的基本要求</strong></p>
+<p>1）散列函数计数得到的散列值是一个非负整数</p>
+<p>数组的下标为非负整数</p>
+<p>2）如何key1 = key2，那hash(key1) == hash(key2)；</p>
+<p>相同的key，经过hash函数是相同的</p>
+<p>3）如何key1 != key2，那hash(key1) != hash(key2)；</p>
+<p>不同的key，经过hash函数得到的散列值希望是不相同的，但这几乎不可能。</p>
+<p><strong>3、什么是散列冲突？如何解决？</strong></p>
+<p>不同的key，经过hash函数得到的散列值不同，即为散列冲突</p>
+<p>1）开放地址法</p>
+<p>如果出现了散列冲突，就重新探测一个位置，将其插入。</p>
+<p>如何重新探测呢？</p>
+<p>线性探测：从出现冲突的位置，顺序往后找到空闲位置再将其插入</p>
+<p>2）链表法</p>
+<p>在出现冲突位置，拉一条链表，在这一条链表上存储相同散列值的元素。</p>
+<p><strong>4、什么是装载因子？</strong></p>
+<p>装载因子=插入表中的元素个数/表的长度</p>
+<p>当装载因子过大时，出现散列冲突的概率也越大</p>
+<p><strong>5、如何设计散列函数？</strong></p>
+<p>1）散列函数的设计不能太复杂</p>
+<p>每次操作元素，都需要先经过散列函数计算散列值，所以散列函数不能有太复杂的计算，以免影响散列表性能。</p>
+<p>2）散列函数生成的散列值尽可能随机并且分布均匀</p>
+<p>这样能避免或者最小化散列冲突</p>
+<p><strong>6、装载因子过大了怎么办？</strong></p>
+<p>装载因子过大，会加大散列冲突，影响散列表性能。</p>
+<p>此时需要对散列表进行扩容来减少装载因子。</p>
+<p>扩容时如果原先散列表中数据量很大，计算并重新搬移到新散列表时势必需要消耗大量时间，如果是线上应用，此时用户需长时间等待甚至服务超时，可将扩容时数据搬移操作均摊在多次操作中，比如插入一个元素，将这个元素插入新散列表的同时，取一个旧散列表中的元素重新计算散列值再插入新散列表。</p>
+<p><strong>7、如何选择冲突解决方法?</strong></p>
+<p>1）开放地址法</p>
+<p>优点：</p>
+<p>数据存储在数组中：可以有效地利用CPU缓存加快查询速度；序列化起来比较简单   </p>
+<p>缺点：</p>
+<p>删除数据比较麻烦，需要在删除位置标记deleted;</p>
+<p>存储在一个数组中，冲突代价更大；</p>
+<p>为了减少冲突，装载因子不能太大，相比链表法更浪费内存空间。</p>
+<p>适用场景：</p>
+<p>当数据量较小，装载因子较小的时候比较适合开放地址法。</p>
+<p>例如Java中的ThreadLocalMap</p>
+<p>2）链表法</p>
+<p>优点：</p>
+<p>链表法对内存的利用率比开放地址法要高：相比开放地址法不需要事先开辟更多空间来减少冲突，冲突时再创建链表即可；</p>
+<p>对装载因子容忍度高，装载因子可以大于1，因为即便这样，也就是链表长度变长了，不会像开放地址法那样不断的进行重新探测；</p>
+<p>缺点：链表中的元素在内存中是分散存储的，对cpu缓存不友好。</p>
+<p>数据量较大的场景：</p>
+<p>比如Java中的hashMap</p>
+<p><strong>8、分析Java中的hashMap</strong></p>
+<p>1）初始大小</p>
+<p>初始长度为16，当空间不足时会进行扩容，为了减少扩容带来的性能消耗，如果事先知道数据量大小，则最好数据量大小初始化hashMap的长度。</p>
+<p>2）装载因子和动态扩容</p>
+<p>最大装载因子为0.75，当哈希桶中元素数量等于0.75*哈希桶容量时，会动态将哈希桶容量扩大两倍，并对原有桶中的数据进行重新散列，将其搬移至新桶</p>
+<p>3）散列冲突解决方法</p>
+<p>采用链表法解决冲突，考虑到单纯用链表的话，在拉链过长时，查询时间复杂度会退化为O(n),性能会变得比较差，</p>
+<p>在jdk1.8的hashMap中引入了红黑树，当链表长度超过8时，将链表转化为红黑树，查询复杂度可以优化到O(logn),</p>
+<p>考虑到数据量较小时，红黑树要维持平衡，性能上相比链表并没有明显优势，于是当链表长度小于8是会将红黑树再转化为链表。</p>
+<p>4）散列函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123; <span class="keyword">int</span> h = key.hashCode()； <span class="keyword">return</span> (h ^ (h &gt;&gt;&gt; <span class="number">16</span>)) &amp; (capicity -<span class="number">1</span>); <span class="comment">//capicity表示散列表的大小</span></span><br></pre></td></tr></table></figure>
+
+<p>取对象的hashCode与其高16位进行异或运算，再和散列表大小-1进行与运算生成散列值</p>
+<p>为什么取高16进行异或运算？充分利用的数据的位数，使得散列值分布更加均匀。</p>
+<p>为什么再和散列表大小-1进行与运算，本质是数据太大还需要进行运算得到数组下标，为了性能更优，用a &amp;(n-1) 代替 a % n，即(h ^ (h &gt;&gt;&gt; 16) % capicity）=(h ^ (h &gt;&gt;&gt; 16)) &amp; (capicity -1)，等式成立的前提是capicity必须是2的整次幂，所以hashMap的大小都为2的整次幂，如果初始化hashMap时指定长度，会将长度调整为2的整次幂，扩容每次也是以2倍进行扩大。</p>
+<p><strong>9、如何设计一个工业级的散列函数？</strong></p>
+<p><strong>1）工业级散列表应该具有哪些特性？</strong></p>
+<p>支持快速的查询、插入、删除操作；</p>
+<p>内存占用合理，不能占用过多的内存空间；</p>
+<p>性能稳定，极端情况下，散列表的性能也不会退化到无法接受的情况</p>
+<p><strong>2）如何设计一个散列表？</strong></p>
+<p>设计一个合适的散列函数；</p>
+<p>定义装载因子阈值，考虑动态扩容策略；</p>
+<p>选择合适的散列冲突解决方法</p>
+<p><strong>10、为什么散列表和链表会经常在一起使用？</strong></p>
+<p>散列表这种数据结构虽然支持非常高效的数据插入、删除、查找操作，但是散列表中的数据都是通过散列函数打乱之后无规律存储的。也就说，它无法支持按照某种顺序快速地遍历数据。如果希望按照顺序遍历散列表中的数据，那我们需要将散列表中的数据拷贝到数组中，然后排序，再遍历。因为散列表是动态数据结构，不停地有数据的插入、删除，所以每当我们希望按顺序遍历散列表中的数据的时候，都需要先排序，那效率势必会很低。为了解决这个问题，我们将散列表和链表（或者跳表）结合在一起使用。</p>
+<p>简单来说，散列表支持高效的数据插入、删除、查找操作，而链表可以记录元素的之间顺序，两则优点结合能够更适合具体的业务场景</p>
+<p><strong>11、散列表和链表结合使用的常见应用？</strong></p>
+<p>1）Java 中的LinkedHashMap</p>
+<p>支持按插入的顺序遍历数据；</p>
+<p>支持按访问的顺序遍历数据，即实现了LRU算法</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -171,57 +258,139 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.baidu.com/2019/12/19/%E6%95%A3%E5%88%97%E8%A1%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/16/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2019-12-16T03:44:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/16/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">二叉树基础</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/16/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80/">二叉树基础</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="散列表" data-title="散列表" data-url="http://www.baidu.com/2019/12/19/%E6%95%A3%E5%88%97%E8%A1%A8/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -245,8 +414,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
