@@ -152,24 +152,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="二叉树的基本概念"><a href="#二叉树的基本概念" class="headerlink" title="二叉树的基本概念"></a>二叉树的基本概念</h3><p>高度：该节点到叶子节点最长路径的边数，从叶子节点(从0开始)往上数</p>
+        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>高度：该节点到叶子节点最长路径的边数，从叶子节点(从0开始)往上数</p>
 <p>深度：根节点到该节点的路径的边数，从根节点往下数(从0开始)往下数</p>
 <p>层：深度+1，从根节点往下数(从1开始)往下数</p>
-<h3 id="什么是满二叉树？"><a href="#什么是满二叉树？" class="headerlink" title="什么是满二叉树？"></a>什么是满二叉树？</h3><p>叶子节点都在最底层；除了叶子节点外，每个节点都有左右两个子节点</p>
-<h3 id="什么是完全二叉树？"><a href="#什么是完全二叉树？" class="headerlink" title="什么是完全二叉树？"></a>什么是完全二叉树？</h3><p>叶子节点都在最底下两层；叶子节点靠左排列；除了最后一层，其他层的节点个数要达到最大</p>
-<h3 id="为什么完全二叉树适合用数组顺序存储？"><a href="#为什么完全二叉树适合用数组顺序存储？" class="headerlink" title="为什么完全二叉树适合用数组顺序存储？"></a>为什么完全二叉树适合用数组顺序存储？</h3><p>完全二叉树用数组顺序存储，可以通过数组下标组织起整棵树，并且不浪费空间，比如当前节点下标为i，如果数组从下标为1的空间开始存储数据，那么当前节点的左子节点存储的下标为i<em>2，右子节点下标为i</em>2+1，父节点下标为i/2。相比链式存储，节约了很多存储空间。</p>
-<h3 id="什么是二叉树的前、中、后序遍历？"><a href="#什么是二叉树的前、中、后序遍历？" class="headerlink" title="什么是二叉树的前、中、后序遍历？"></a>什么是二叉树的前、中、后序遍历？</h3><p>前序遍历：对树中任意节点来说，先打印该节点，再打印它的左子树，最后打印它的右子树，</p>
-<p>中序遍历：对树种任意节点来说，先打印它的左子树，再打印该节点，最后打印它的右子树</p>
-<p>后序遍历：对树中任意节点来说，先打印它的左子树，再打印它的右子树，最后打印该节点</p>
-<p>二叉树遍历的时间复杂度为O(n)</p>
-<h5 id="递归公式："><a href="#递归公式：" class="headerlink" title="递归公式："></a>递归公式：</h5><p>前序：print(root.value)；preOrder(root.left);preOrder(root.right)</p>
-<p>中序：inOrder(root.left);print(root.value);inOrder(root.right)</p>
-<p>后序：postOrder(root.left);postOrder(root.right);print(root.value)</p>
-<h3 id="如何实现二叉树的按层遍历？"><a href="#如何实现二叉树的按层遍历？" class="headerlink" title="如何实现二叉树的按层遍历？"></a>如何实现二叉树的按层遍历？</h3><p>可以利用一个辅助队列，首先将根节点插入队列，如果队列不为空则取节点打印，如果当前打印节点存在左节点则把其左结点插入队列，如果存在右节点，把右节点也插入队列，直到队列为空，遍历结束。</p>
-<p>代码实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> list <span class="title">cengOrder</span><span class="params">(Node root)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  List&lt;Node&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  List&lt;Node&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">  queue.add(root);</span><br><span class="line">  <span class="keyword">while</span>(!queue.isEmpty()&#123;</span><br><span class="line">    Node curNode = quque.poll();</span><br><span class="line">    result.add(curNode);</span><br><span class="line">    <span class="keyword">if</span>(curNode.getLeft() != <span class="keyword">null</span>)&#123;</span><br><span class="line">      queue.add(curNode.getLeft());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(curNode.getRight() != <span class="keyword">null</span>)&#123;</span><br><span class="line">      queue.add(curNode.getRight());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+        
+          <a class="article-more-a" href="/2019/12/16/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80/#more">展开全文 >></a>
+        
       
 
       
@@ -190,10 +178,6 @@
 
       
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/16/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80/">展开全文 >></a>
-        </p>
       
 
       
